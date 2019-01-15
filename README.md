@@ -2,7 +2,21 @@
 
 This is a django template tag to help developers render [structured data](https://developers.google.com/search/docs/guides/intro-structured-data) tags inside their django templates.
 
-## Usage
+## Installation
+Install using `pip`:
+```
+pip install django-json-ld
+```
+
+Add `django_json_ld` to `INSTALLED_APPS` in `settings.py`:
+```
+INSTALLED_APPS = [
+    # Other apps...
+    'django_json_ld',
+]
+```
+
+## Usage Example
 Assuming you have a structured data `sd` like the following in your context (copied from the link above).
 ```
 sd = {

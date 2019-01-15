@@ -1,7 +1,7 @@
 import os
 import re
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def rel(*parts):
@@ -18,7 +18,7 @@ VERSION = re.findall("__version__ = '([^']+)'", INIT_PY)[0]
 
 setup(
     name='django-json-ld',
-    packages=['django_json_ld'],
+    packages=find_packages(),
     include_package_data=True,
     version=VERSION,
     description='Django template tag for json-ld',

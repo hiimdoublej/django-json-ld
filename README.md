@@ -16,6 +16,20 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Settings
+You can override the following options in settings.py:
+
+`JSON_LD_CONTEXT_ATTRIBUTE`: the context attribute name used in `django_json_ld`'s Class-Based Views (CBV). Defaults to `'sd'`.
+
+`JSON_LD_MODEL_ATTRIBUTE`: the model attribute name used by `JsonLdDetailView` to get the model's structured data. Defaults to `'sd'`.
+
+`JSON_LD_DEFAULT_CONTEXT`: default json-ld context when using `django_json_ld`'s CBVs. Defaults to `'https://schema.org'`.
+
+`JSON_LD_DEFAULT_TYPE`: default json-ld type when using `django_json_ld`'s CBVs. Defaults to `'Thing'`.
+
+`JSON_LD_GENERATE_URL`: generate json-ld's `url` field when using `django_json_ld`'s CBVs. Defaults to `True`.
+
+
 ## Usage Example
 Assuming you have a structured data `sd` like the following in your context (copied from the link above).
 ```
@@ -52,3 +66,42 @@ Would render into:
 }
 </script>
 ```
+
+### Class-Based View example
+
+views.py
+```python
+from django_json_ld.views import JsonLdDetailView
+
+class ProductDetailView(JsonLdDetailView):
+    model=Product
+```
+
+models.py
+```python
+class Product(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
+    description = models.TextField(_('Description'))
+    
+    @property
+    def sd(self):
+        return {
+            "@type": 'Product',
+            "description": self.description,
+            "name": self.name,
+        }
+```
+
+By using  `{% render_json_ld sd %}`, as explained in the previous example, would render into something like:
+
+```json
+{
+    "@context":"https://schema.org",    
+    "@type":"Product",
+    "name":"The Product",
+    "description":"A great product.",
+    "url":"http://example.org/products/1/the-product/"
+}
+```
+
+In the above example `JsonLdDetailView` adds `sd` to `ProductDetailView`'s context, using `Product`'s own `sd` property. The `url` is generated automatically by `JsonLdDetailView`. This behaviour is configurable through settings.

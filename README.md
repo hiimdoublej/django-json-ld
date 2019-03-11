@@ -83,6 +83,7 @@ class HomeView(JsonLdContextMixin, generic.ListView):
     structured_data = {
         "@type": "Organization",
         "name": "The Company",
+        "description": _("A great company."),
     }
     
     def get_structured_data(self):
@@ -98,6 +99,7 @@ By using  `{% render_json_ld sd %}`, as explained in the previous example, would
     "@context":"https://schema.org",    
     "@type":"Organization",
     "name":"The Company",
+    "description":"Uma grande empresa.",
     "url":"http://example.org/",
     "event": {
         "@type": "Event",
@@ -109,7 +111,8 @@ By using  `{% render_json_ld sd %}`, as explained in the previous example, would
 }
 ```
 
-In the above example `JsonLdContextMixin` adds `sd` to `HomeView`'s context.
+In the above example `JsonLdContextMixin` adds `sd` to `HomeView`'s context. 
+`django_json_ld` supports lazy translations, hence `"description"` showing the translated version of its original value.
 
 #### Detail View
 

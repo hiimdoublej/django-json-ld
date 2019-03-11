@@ -2,6 +2,10 @@
 
 This is a django template tag to help developers render [structured data](https://developers.google.com/search/docs/guides/intro-structured-data) tags inside their django templates.
 
+Furthermore a collection of views and mixins are included:
+ * `JsonLdContextMixin`, `JsonLdView`
+ * `JsonLdSingleObjectMixin`, `JsonLdDetailView`
+
 ## Installation
 Install using `pip`:
 ```
@@ -69,6 +73,46 @@ Would render into:
 
 ### Class-Based View example
 
+#### Simple View
+
+views.py
+```python
+from django_json_ld.views import JsonLdContextMixin
+
+class HomeView(JsonLdContextMixin, generic.ListView):
+    structured_data = {
+        "@type": "Organization",
+        "name": "The Company",
+    }
+    
+    def get_structured_data(self):
+        structured_data = super(HomeView, self).get_structured_data()
+        structured_data["event"] = get_next_event()
+        return structured_data
+```
+
+By using  `{% render_json_ld sd %}`, as explained in the previous example, would render into something like:
+
+```json
+{
+    "@context":"https://schema.org",    
+    "@type":"Organization",
+    "name":"The Company",
+    "url":"http://example.org/",
+    "event": {
+        "@type": "Event",
+        "about": ["Hodler","Monet","Munch"],
+        "name": "Peindre l'impossible",
+        "startDate": "2016-09-15",
+        "endDate": "2017-01-22"
+    }
+}
+```
+
+In the above example `JsonLdContextMixin` adds `sd` to `HomeView`'s context.
+
+#### Detail View
+
 views.py
 ```python
 from django_json_ld.views import JsonLdDetailView
@@ -92,7 +136,7 @@ class Product(models.Model):
         }
 ```
 
-By using  `{% render_json_ld sd %}`, as explained in the previous example, would render into something like:
+By using  `{% render_json_ld sd %}`, as explained previously, would render into something like:
 
 ```json
 {

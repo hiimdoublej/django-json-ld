@@ -3,18 +3,24 @@ from django.views import generic
 from . import settings
 
 
-INITIAL_STRUCTURED_DATA = {}
+DEFAULT_STRUCTURED_DATA = {}
 if settings.DEFAULT_CONTEXT:
-    INITIAL_STRUCTURED_DATA["@context"] = settings.DEFAULT_CONTEXT
+    DEFAULT_STRUCTURED_DATA["@context"] = settings.DEFAULT_CONTEXT
 if settings.DEFAULT_TYPE:
-    INITIAL_STRUCTURED_DATA["@type"] = settings.DEFAULT_TYPE
+    DEFAULT_STRUCTURED_DATA["@type"] = settings.DEFAULT_TYPE
 
 
 class JsonLdContextMixin(object):
     """
-    CBV mixin which sets sets structured data within the context
+    CBV mixin which sets structured data within the view's context
     """
-    structured_data = INITIAL_STRUCTURED_DATA
+    structured_data = {}
+
+    def __init__(self):
+        super(JsonLdContextMixin, self).__init__()
+        instance_structured_data = DEFAULT_STRUCTURED_DATA.copy()
+        instance_structured_data.update(self.structured_data)
+        self.structured_data = instance_structured_data
 
     def get_structured_data(self):
         if settings.GENERATE_URL and "url" not in self.structured_data:
@@ -38,7 +44,7 @@ class JsonLdView(JsonLdContextMixin, generic.View):
 
 class JsonLdSingleObjectMixin(JsonLdContextMixin):
     """
-    CBV mixin which sets sets structured data within the context for a single object
+    CBV mixin which sets structured data for a single object within the context
     """
     def get_structured_data(self):
         super(JsonLdSingleObjectMixin, self).get_structured_data()

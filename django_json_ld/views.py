@@ -1,4 +1,4 @@
-from django.views.generic.detail import DetailView
+from django.views import generic
 
 from . import settings
 
@@ -16,29 +16,40 @@ class JsonLdContextMixin(object):
     """
     structured_data = INITIAL_STRUCTURED_DATA
 
-    def get_structured_data(self, instance=None):
-        if settings.GENERATE_URL:
+    def get_structured_data(self):
+        if settings.GENERATE_URL and "url" not in self.structured_data:
             self.structured_data["url"] = self.request.build_absolute_uri(self.request.get_full_path())
-
-        if instance:
-            model_structured_data = getattr(instance, settings.MODEL_ATTRIBUTE)
-            self.structured_data.update(model_structured_data)
-
         return self.structured_data.copy()
 
     def get_context_data(self, **kwargs):
         context = super(JsonLdContextMixin, self).get_context_data(**kwargs)
-        try:
-            obj = kwargs.get('object', self.object)
-        except AttributeError:
-            obj = None
-        context[settings.CONTEXT_ATTRIBUTE] = self.get_structured_data(instance=obj)
+        context[settings.CONTEXT_ATTRIBUTE] = self.get_structured_data()
         return context
 
 
-class JsonLdDetailView(JsonLdContextMixin, DetailView):
+class JsonLdView(JsonLdContextMixin, generic.View):
     """
-    Render a "detail" view with structured data taken from of an object.
+    Render a view with structured data.
+
+    Set `structured_data` with structured data constant fields.
+    Override `get_structured_data` for any dynamic fields.
+    """
+
+
+class JsonLdSingleObjectMixin(JsonLdContextMixin):
+    """
+    CBV mixin which sets sets structured data within the context for a single object
+    """
+    def get_structured_data(self):
+        super(JsonLdSingleObjectMixin, self).get_structured_data()
+        model_structured_data = getattr(self.object, settings.MODEL_ATTRIBUTE)
+        self.structured_data.update(model_structured_data)
+        return self.structured_data.copy()
+
+
+class JsonLdDetailView(JsonLdSingleObjectMixin, generic.DetailView):
+    """
+    Render a "detail" view with structured data taken from object.
 
     By default implement property `sd` in the model to return structured data in a dict.
     """

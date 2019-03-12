@@ -3,7 +3,7 @@ from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
 
 
-def validate(sd):
+def validate_sd(sd):
     if type(sd) != dict:
         err = 'Invalid type for provided structured data, expected "dict", got {}'.format(type(sd))
         return False, err

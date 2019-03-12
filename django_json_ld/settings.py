@@ -7,3 +7,5 @@ MODEL_ATTRIBUTE = getattr(settings,   'JSON_LD_MODEL_ATTRIBUTE', 'sd')
 DEFAULT_CONTEXT = getattr(settings, 'JSON_LD_DEFAULT_CONTEXT', 'https://schema.org')
 DEFAULT_TYPE = getattr(settings,    'JSON_LD_DEFAULT_TYPE', 'Thing')
 GENERATE_URL = getattr(settings,    'JSON_LD_GENERATE_URL', True)
+
+EMPTY_INPUT_RENDERING = getattr(settings, 'JSON_LD_EMPTY_INPUT_RENDERING', 'strict')

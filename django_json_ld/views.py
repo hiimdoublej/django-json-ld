@@ -1,6 +1,7 @@
 from django.views import generic
 
 from . import settings
+from .util import build_absolute_uri
 
 
 DEFAULT_STRUCTURED_DATA = {}
@@ -24,7 +25,7 @@ class JsonLdContextMixin(object):
 
     def get_structured_data(self):
         if settings.GENERATE_URL and "url" not in self.structured_data:
-            self.structured_data["url"] = self.request.build_absolute_uri(self.request.get_full_path())
+            self.structured_data["url"] = build_absolute_uri(self.request)
         return self.structured_data.copy()
 
     def get_context_data(self, **kwargs):

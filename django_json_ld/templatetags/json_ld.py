@@ -4,7 +4,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.template import TemplateSyntaxError
 
-from ..util import LazyEncoder, validate_sd
+from ..util import LazyEncoder, validate_sd, build_absolute_uri
 from .. import settings
 
 register = template.Library()
@@ -28,9 +28,9 @@ def render_json_ld(context, structured_data):
             return ''
         elif empty_input_choice == 'generate_thing':
             structured_data = {
-                "@context": "https://schema.org",
-                "@type": "Thing",
-                "url": context['request'].build_absolute_uri(),
+                "@context": settings.DEFAULT_CONTEXT,
+                "@type": settings.DEFAULT_TYPE,
+                "url": build_absolute_uri(context['request']),
             }
     dumped = json.dumps(structured_data, ensure_ascii=False, cls=LazyEncoder)
     text = "<script type=application/ld+json>{dumped}</script>".format(

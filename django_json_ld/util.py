@@ -4,10 +4,15 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 
 def validate_sd(sd):
-    if type(sd) != dict:
+    if sd and type(sd) != dict:
         err = 'Invalid type for provided structured data, expected "dict", got {}'.format(type(sd))
         return False, err
     return True, None
+
+
+def build_absolute_uri(request):
+    return request.build_absolute_uri()
+
 
 class LazyEncoder(DjangoJSONEncoder):
     """

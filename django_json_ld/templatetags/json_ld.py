@@ -32,7 +32,7 @@ def render_json_ld(context, structured_data):
                 "@type": settings.DEFAULT_TYPE,
                 "url": build_absolute_uri(context['request']),
             }
-    dumped = json.dumps(structured_data, ensure_ascii=False, cls=LazyEncoder)
+    dumped = json.dumps(structured_data, ensure_ascii=False, cls=LazyEncoder, sort_keys=True)
     text = "<script type=application/ld+json>{dumped}</script>".format(
         dumped=dumped)
     return mark_safe(text)

@@ -3,6 +3,17 @@ from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
 
 
+def validate_sd(sd):
+    if sd and not isinstance(sd, collections.Mapping):
+        err = 'Invalid type for provided structured data, expected "dict", got {}'.format(type(sd))
+        return False, err
+    return True, None
+
+
+def build_absolute_uri(request):
+    return request.build_absolute_uri()
+
+
 class LazyEncoder(DjangoJSONEncoder):
     """
     Force lazy strings to text

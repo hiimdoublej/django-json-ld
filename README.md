@@ -37,7 +37,7 @@ You can override the following options in settings.py:
 * `strict` default, raise TemplateSyntaxError.
 * `silent` renders nothing.
 * `generate_thing` creates object with URL of current page. eg: 
-```json
+```
 structured_data = {
                 "@context": <JSON_LD_DEFAULT_CONTEXT>,
                 "@type": <JSON_LD_DEFAULT_TYPE>,

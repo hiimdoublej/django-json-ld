@@ -22,7 +22,7 @@ def render_json_ld(context, structured_data):
     if len(structured_data) == 0:
         if empty_input_choice == 'strict':
             err = 'Empty structured_data provided under strict render policy.'
-            err += 'Consider change JSON_LD_EMPTY_INPUT_RENDERING setting to other values.'
+            err += ' Consider changing JSON_LD_EMPTY_INPUT_RENDERING setting to other values.'
             raise TemplateSyntaxError(err)
         elif empty_input_choice == 'silent':
             return ''

@@ -33,6 +33,18 @@ You can override the following options in settings.py:
 
 `JSON_LD_GENERATE_URL`: generate json-ld's `url` field when using `django_json_ld`'s CBVs. Defaults to `True`.
 
+`JSON_LD_EMPTY_INPUT_RENDERING`: behavior when the template tag receives an empty object. Possible values:
+* `strict` default, raise TemplateSyntaxError.
+* `silent` renders nothing.
+* `generate_thing` creates object with URL of current page. eg: 
+```json
+structured_data = {
+                "@context": <JSON_LD_DEFAULT_CONTEXT>,
+                "@type": <JSON_LD_DEFAULT_TYPE>,
+                "url": <current_page_url>,
+                }
+```
+
 
 ## Usage Example
 Assuming you have a structured data `sd` like the following in your context (copied from the link above).

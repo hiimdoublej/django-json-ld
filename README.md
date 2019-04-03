@@ -63,7 +63,7 @@ sd = {
 ```
 Then, in your template:
 ```
-{% load render_json_ld from django_json_ld %}
+{% load render_json_ld from json_ld %}
 {% render_json_ld sd %}
 ```
 Would render into:

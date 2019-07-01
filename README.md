@@ -29,7 +29,7 @@ You can override the following options in settings.py:
 
 `JSON_LD_DEFAULT_CONTEXT`: default json-ld context when using `django_json_ld`'s CBVs. Defaults to `'https://schema.org/'`.
 
-`JSON_LD_INDENT`: indent are used by `json.dumps` function to prettify output. Valid values are `None` or a non-negative integer. Defaults to `None` - outputs on a single line.
+`JSON_LD_INDENT`: indent are used by `json.dumps` function to prettify output. Valid values are `None` or a non-negative integer. Defaults to `None` - outputs on a single line. This setting is used only if ``DEBUG`` is ``True``
 
 `JSON_LD_DEFAULT_TYPE`: default json-ld type when using `django_json_ld`'s CBVs. Defaults to `'Thing'`.
 

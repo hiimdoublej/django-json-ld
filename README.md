@@ -27,7 +27,9 @@ You can override the following options in settings.py:
 
 `JSON_LD_MODEL_ATTRIBUTE`: the model attribute name used by `JsonLdDetailView` to get the model's structured data. Defaults to `'sd'`.
 
-`JSON_LD_DEFAULT_CONTEXT`: default json-ld context when using `django_json_ld`'s CBVs. Defaults to `'https://schema.org'`.
+`JSON_LD_DEFAULT_CONTEXT`: default json-ld context when using `django_json_ld`'s CBVs. Defaults to `'https://schema.org/'`.
+
+`JSON_LD_INDENT`: indent are used by `json.dumps` function to prettify output. Valid values are `None` or a non-negative integer. Defaults to `None` - outputs on a single line. This setting is used only if ``DEBUG`` is ``True``
 
 `JSON_LD_DEFAULT_TYPE`: default json-ld type when using `django_json_ld`'s CBVs. Defaults to `'Thing'`.
 
@@ -50,9 +52,9 @@ structured_data = {
 Assuming you have a structured data `sd` like the following in your context (copied from the link above).
 ```
 sd = {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org/",
   "@type": "Organization",
-  "url": "http://www.example.com",
+  "url": "http://www.example.com/",
   "name": "Unlimited Ball Bearings Corp.",
   "contactPoint": {
     "@type": "ContactPoint",
@@ -70,9 +72,9 @@ Would render into:
 ```
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org/",
   "@type": "Organization",
-  "url": "http://www.example.com",
+  "url": "http://www.example.com/",
   "name": "Unlimited Ball Bearings Corp.",
   "contactPoint": {
     "@type": "ContactPoint",
@@ -108,7 +110,7 @@ By using  `{% render_json_ld sd %}`, as explained in the previous example, would
 
 ```json
 {
-    "@context":"https://schema.org",    
+    "@context":"https://schema.org/",    
     "@type":"Organization",
     "name":"The Company",
     "description":"Uma grande empresa.",
@@ -155,7 +157,7 @@ By using  `{% render_json_ld sd %}`, as explained previously, would render into 
 
 ```json
 {
-    "@context":"https://schema.org",    
+    "@context":"https://schema.org/",    
     "@type":"Product",
     "name":"The Product",
     "description":"A great product.",

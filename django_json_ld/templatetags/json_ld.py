@@ -1,6 +1,7 @@
 import json
 
 from django import template
+from django.conf import settings as django_settings
 from django.utils.safestring import mark_safe
 from django.template import TemplateSyntaxError
 
@@ -32,7 +33,9 @@ def render_json_ld(context, structured_data):
                 "@type": settings.DEFAULT_TYPE,
                 "url": build_absolute_uri(context['request']),
             }
-    dumped = json.dumps(structured_data, ensure_ascii=False, cls=LazyEncoder, sort_keys=True)
-    text = "<script type=application/ld+json>{dumped}</script>".format(
-        dumped=dumped)
+    indent = settings.JSON_INDENT if django_settings.DEBUG else None
+    nl = '' if indent is None else '\n'
+    dumped = json.dumps(structured_data, ensure_ascii=False, cls=LazyEncoder, indent=indent, sort_keys=True)
+    text = "<script type=\"application/ld+json\">{nl}{dumped}{nl}</script>".format(
+        nl=nl, dumped=dumped)
     return mark_safe(text)

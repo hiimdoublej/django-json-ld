@@ -25,12 +25,15 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     author='Johnny Chang',
-    author_email='hiimdoublej.pi@gmail.com',
+    author_email='hiimdoublej@gmail.com',
     #  download_url = 'https://github.com/owais/django-webpack-loader/tarball/{0}'.format(VERSION),
     url='https://github.com/hiimdoublej/django-json-ld',  # use the URL to the github repo
     keywords=['django', 'webpack', 'assets'],  # arbitrary keywords
     classifiers=[
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Framework :: Django',
         'Environment :: Web Environment',
         'License :: OSI Approved :: MIT License',

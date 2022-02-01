@@ -1,0 +1,19 @@
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  upload-to-pypi:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.12
+    - run: python3 -m pip install --upgrade build && python3 -m build
+    - name: Publish a Python distribution to PyPI
+      uses: pypa/gh-action-pypi-publish@v1.5.0
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_UPLOAD_TOKEN }}
+        skip_existing: true

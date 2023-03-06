@@ -6,7 +6,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 
 def validate_sd(sd):
-    if sd and (type(sd) not in [Mapping, list]):
+    if sd and (type(sd) not in [Mapping, dict, list]):
         err = 'Invalid type for provided structured data, expected "dict" or "list", got {}'.format(type(sd))
         return False, err
     return True, None

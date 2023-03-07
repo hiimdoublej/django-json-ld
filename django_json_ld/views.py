@@ -17,7 +17,7 @@ class JsonLdContextMixin(object):
     """
     structured_data = None
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(JsonLdContextMixin, self).__init__()
 
         if not self.structured_data:

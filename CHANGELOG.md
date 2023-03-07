@@ -5,6 +5,7 @@ For more general information, view the [readme](README.md).
 ## [0.0.6] -- 2023-03-06
 
 - feat(utils): Add support for multiple types (#32) by @denisroldan
+- feat(views): Support optional kwargs on views (#32) by @denisroldan
 
 ## [0.0.5] -- 2022-02-01
 

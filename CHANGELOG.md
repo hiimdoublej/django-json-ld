@@ -2,6 +2,10 @@
 
 For more general information, view the [readme](README.md).
 
+## [0.0.6] -- 2023-03-09
+
+- feat(views): Support optional kwargs on views (#33) by @denisroldan
+
 ## [0.0.5] -- 2022-02-01
 
 - fix(utils): Update force_text to force_str (#25) by @denisroldan

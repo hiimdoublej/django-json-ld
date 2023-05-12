@@ -17,7 +17,7 @@ class JsonLdContextMixin(object):
     """
     structured_data = None
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(JsonLdContextMixin, self).__init__()
 
         if not self.structured_data:
@@ -82,7 +82,7 @@ class JsonLdMultipleObjectMixin(JsonLdContextMixin):
     """
     CBV mixin which sets structured data for a multiple objects within the context
     """
-    def __init__(self):
+    def __init__(self, **kwargs):
         if not self.structured_data:
             self.structured_data = {}
         if "@graph" not in self.structured_data:
